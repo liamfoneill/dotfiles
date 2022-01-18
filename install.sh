@@ -3,9 +3,14 @@
 echo "Setting up your WSL..."
 
 # Configure Git
-git config --global user.email "liamfoneill@users.noreply.github.com"
-git config --global user.name "Liam F. O'Neill"
+ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/.zshrc ~/.zshrc
 
+# Copy SSH folder from Windows Installation
+cp -r /mnt/c/Users/liam/.ssh ~/.ssh
+
+# Add SSH Private Key to SSH-Agent
+ssh-add ~/.ssh/id_ed25519
 
 sudo apt update
 sudo apt upgrade -y
@@ -23,6 +28,12 @@ sudo apt install -y \
     zsh
 
 
+echo "Installing Microsoft GPG Keys..."
+wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb
+sudo dpkg -i packages-microsoft-prod.deb
+sudo apt-get update
+sudo apt-get install -y powershell
+
 echo "Installing the Azure CLI..."
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
@@ -30,6 +41,7 @@ echo "Installing DotNet..."
 sudo apt-get install -y dotnet-sdk-6.0
 sudo apt-get install -y nuget
 
+# TODO This bicep script is kinda dumb - the install isn't idempotent
 echo "Installing Azure Bicep..."
 # Fetch the latest Bicep CLI binary
 curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-linux-x64
@@ -37,6 +49,8 @@ curl -Lo bicep https://github.com/Azure/bicep/releases/latest/download/bicep-lin
 chmod +x ./bicep
 # Add bicep to your PATH (requires admin)
 sudo mv ./bicep /usr/local/bin/bicep
+
+rm -f packages-microsoft-prod.deb
 
 echo "Installing Terraform..."
 curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -63,3 +77,16 @@ sudo npm install -g typescript
 
 echo "Installing Vue.JS"
 sudo npm install -g vue@next
+
+echo "Installing ZSH..."
+sudo apt install -y zsh
+chsh -s $(which zsh)
+
+echo "Installing oh-my-zsh..."
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+echo "Installing Keybase..."
+curl --remote-name https://prerelease.keybase.io/keybase_amd64.deb
+sudo apt install -y ./keybase_amd64.deb
+rm -f keybase_amd64.deb
+run_keybase
