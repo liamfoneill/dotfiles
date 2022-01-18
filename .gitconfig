@@ -1,6 +1,3 @@
 [user]
 	email = liamfoneill@users.noreply.github.com
 	name = "Liam F. O'Neill"
-	signingkey = E6A9A85ED1CE526C
-[commit]
-	gpgsign = true
