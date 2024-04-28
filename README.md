@@ -1,3 +1,5 @@
+Step 1:
+
 After Installing Keybase you will need to sign in with 'keybase login'
 
 Then export your pgp keys:
