@@ -71,7 +71,7 @@ Auto-populate it by dumping what's currently installed and subtracting everythin
 
 ```bash
 brew bundle dump --file=/tmp/personal-dump --force --describe
-comm -13 <(grep -E '^(brew|cask|tap)' homebrew/Brewfile homebrew/work/Brewfile | sed 's/#.*//' | awk '{print $1, $2}' | sort -u) <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | awk '{print $1, $2}' | sort -u) >> homebrew/personal/Brewfile
+comm -13 <(grep -E '^(brew|cask|tap)' homebrew/Brewfile homebrew/work/Brewfile | sed 's/#.*//' | awk '{print $1, $2}' | sed 's/,$//' | sort -u) <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | awk '{print $1, $2}' | sed 's/,$//' | sort -u) >> homebrew/personal/Brewfile
 ```
 
 This appends every package unique to your machine into `homebrew/personal/Brewfile`. Review the result and remove anything you don't want synced (e.g. one-off tools, dependencies you didn't install directly):
