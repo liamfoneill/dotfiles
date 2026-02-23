@@ -46,10 +46,11 @@ The installer will **back up and replace** your existing `.zshrc`, `.gitconfig`,
 
 ```bash
 # Compare your current zshrc with the repo version
-diff ~/.zshrc stow/zsh/.zshrc
+# (files are dotfiles — use ls -la to see them in stow/ directories)
+diff ~/.zshrc ~/dotfiles/stow/zsh/.zshrc
 
 # Same for gitconfig
-diff ~/.gitconfig stow/git/.gitconfig
+diff ~/.gitconfig ~/dotfiles/stow/git/.gitconfig
 ```
 
 Anything personal you want to keep should go in:
