@@ -76,11 +76,13 @@ brew bundle dump --file=/tmp/personal-dump --force --describe
 Compare it with the common Brewfile to find what's different:
 
 ```bash
-# See what's on your machine but not in the common Brewfile
-# (unified diff: - lines are in the repo, + lines are on your machine only)
-diff -u <(grep -E '^(brew|cask|tap)' homebrew/Brewfile | sort) \
-        <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | sort)
+diff -u <(grep -E '^(brew|cask|tap)' homebrew/Brewfile | sort) <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | sort)
 ```
+
+Reading the output:
+- **`+` lines** — on your machine but not in the common Brewfile. These are your **personal-only** packages; add them to `homebrew/personal/Brewfile`.
+- **`-` lines** — in the common Brewfile but not on your machine yet. The installer will install these.
+- **no prefix** — already in both. Nothing to do.
 
 Add personal-only packages (apps blocked by corporate policy, personal tools, games, etc.) to `homebrew/personal/Brewfile`:
 
