@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Post-merge hook: remind to re-run install.sh when non-symlinked configs change.
 
+# shellcheck disable=SC1083
 changed_files=$(git diff HEAD@{1} --name-only 2>/dev/null)
 
 needs_rerun=false
