@@ -257,11 +257,11 @@ else
         backup_file "${HOME}/.zshrc"
 
         if ! dry_run "stow zsh"; then
+            remove_for_stow "${HOME}/.zshrc"
             stow_module "zsh"
             success "Linked .zshrc"
         fi
 
-        # Symlink the profile-specific zshrc, remove the other
         if [[ "$PROFILE" == "work" ]]; then
             success "Work config (.zshrc.work) included via stow"
             if [[ -L "${HOME}/.zshrc.personal" ]]; then
@@ -291,6 +291,7 @@ else
         backup_file "${HOME}/.gitconfig"
 
         if ! dry_run "stow git"; then
+            remove_for_stow "${HOME}/.gitconfig"
             stow_module "git"
             success "Linked .gitconfig"
         fi
@@ -319,6 +320,7 @@ else
         mkdir -p "${HOME}/.config"
 
         if ! dry_run "stow starship"; then
+            remove_for_stow "${HOME}/.config/starship.toml"
             stow_module "starship"
             success "Linked starship.toml"
         fi
@@ -339,6 +341,7 @@ else
         mkdir -p "${HOME}/.config/ghostty"
 
         if ! dry_run "stow ghostty"; then
+            remove_for_stow "${HOME}/.config/ghostty/config"
             stow_module "ghostty"
             success "Linked ghostty config"
         fi
@@ -361,6 +364,9 @@ else
         mkdir -p "${HOME}/.config/yazi"
 
         if ! dry_run "stow yazi"; then
+            remove_for_stow "${HOME}/.config/yazi/yazi.toml"
+            remove_for_stow "${HOME}/.config/yazi/keymap.toml"
+            remove_for_stow "${HOME}/.config/yazi/previewers.toml"
             stow_module "yazi"
             success "Linked yazi config"
         fi
@@ -381,6 +387,7 @@ else
         mkdir -p "${HOME}/.hammerspoon"
 
         if ! dry_run "stow hammerspoon"; then
+            remove_for_stow "${HOME}/.hammerspoon/init.lua"
             stow_module "hammerspoon"
             success "Linked hammerspoon init.lua"
         fi
@@ -403,6 +410,8 @@ else
         mkdir -p "${local_dir}"
 
         if ! dry_run "stow vscode"; then
+            remove_for_stow "${local_dir}/keybindings.json"
+            remove_for_stow "${local_dir}/settings.json"
             stow_module "vscode"
             success "Linked VS Code keybindings.json and settings.json"
         fi
@@ -428,6 +437,8 @@ else
         mkdir -p "${local_dir}"
 
         if ! dry_run "stow cursor"; then
+            remove_for_stow "${local_dir}/keybindings.json"
+            remove_for_stow "${local_dir}/settings.json"
             stow_module "cursor"
             success "Linked Cursor keybindings.json and settings.json"
         fi

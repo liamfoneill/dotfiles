@@ -42,16 +42,20 @@ The dry run shows exactly what would happen without touching anything. Review th
 
 ### 2. Review your existing configs
 
-The installer will **back up and replace** your existing `.zshrc`, `.gitconfig`, and other dotfiles. Before running for real, check what you'll lose:
+The installer will **back up and replace** your existing `.zshrc`, `.gitconfig`, and other dotfiles. Before running for real, check what you have and what you might lose:
 
 ```bash
-# Compare your current zshrc with the repo version
-# (files are dotfiles — use ls -la to see them in stow/ directories)
-diff "$HOME/.zshrc" "$HOME/dotfiles/stow/zsh/.zshrc"
+# See which shell config files you currently have
+ls -la ~/.zshrc ~/.zprofile ~/.zshenv ~/.bash_profile 2>/dev/null
+
+# If you have an existing .zshrc, compare it with the repo version
+diff "$HOME/.zshrc" "$HOME/dotfiles/stow/zsh/.zshrc" 2>/dev/null
 
 # Same for gitconfig
-diff "$HOME/.gitconfig" "$HOME/dotfiles/stow/git/.gitconfig"
+diff "$HOME/.gitconfig" "$HOME/dotfiles/stow/git/.gitconfig" 2>/dev/null
 ```
+
+If you don't have a `.zshrc` yet (common on fresh-ish Macs where config lives in `.zprofile`), there's nothing to lose -- the installer will create one. Review your `.zprofile` for anything you want to keep.
 
 Anything personal you want to keep should go in:
 - `stow/zsh/.zshrc.personal` -- personal shell config (sourced by the shared `.zshrc`)

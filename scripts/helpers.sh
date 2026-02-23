@@ -90,19 +90,25 @@ print_summary() {
 }
 
 # ---------------------------------------------------------------------------
-# Backup utility
+# Backup utility (copy-only — does NOT remove the original)
 # ---------------------------------------------------------------------------
 BACKUP_DIR="${HOME}/.dotfiles-backup/$(date +%Y%m%d_%H%M%S)"
 
 backup_file() {
     local file="$1"
+    if [[ "${DRY_RUN:-false}" == "true" ]]; then
+        if [[ -e "$file" || -L "$file" ]]; then
+            local relative="${file#"$HOME"/}"
+            info "${DIM}[dry-run]${RESET} Would back up ${DIM}${relative}${RESET}"
+        fi
+        return 0
+    fi
     if [[ -L "$file" ]]; then
         local relative="${file#"$HOME"/}"
         local dest="${BACKUP_DIR}/${relative}.symlink"
         mkdir -p "$(dirname "$dest")"
         readlink "$file" > "$dest"
         info "Backed up symlink ${DIM}${relative}${RESET}"
-        rm "$file"
     elif [[ -e "$file" ]]; then
         mkdir -p "$BACKUP_DIR"
         local relative="${file#"$HOME"/}"
@@ -110,6 +116,17 @@ backup_file() {
         mkdir -p "$(dirname "$dest")"
         cp -R "$file" "$dest"
         info "Backed up ${DIM}${relative}${RESET}"
+    fi
+}
+
+# ---------------------------------------------------------------------------
+# Remove a file to make way for stow (call after backup_file, inside dry_run guard)
+# ---------------------------------------------------------------------------
+remove_for_stow() {
+    local file="$1"
+    if [[ -L "$file" ]]; then
+        rm "$file"
+    elif [[ -e "$file" ]]; then
         rm -rf "$file"
     fi
 }
