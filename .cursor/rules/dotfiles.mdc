@@ -53,9 +53,14 @@ This repo is on **github.com** (not Stripe enterprise). On the work laptop:
 - Check CI: `GH_HOST=github.com gh run list -R liamfoneill/dotfiles`
 - View failed logs: `GH_HOST=github.com gh run view <run-id> --log-failed -R liamfoneill/dotfiles`
 
+## Auto-Sync
+
+A launchd agent runs `scripts/auto-sync.sh` hourly. It snapshots symlinked configs before `git pull` and notifies via macOS if a re-run is needed. Snapshots live at `~/.dotfiles-backup/auto-sync/`. The plist template at `scripts/com.dotfiles.sync.plist` uses `__DOTFILES_DIR__` / `__HOME__` placeholders templated by `install.sh`. `scripts/rollback.sh` restores snapshots into the repo.
+
 ## Key Rules
 
 - `scripts/helpers.sh` is sourced, never executed. It must NOT set shell options.
+- `scripts/auto-sync.sh` runs headless — no color codes, no interactive prompts, no sourcing of `helpers.sh`.
 - Use `backup_file` before overwriting any file.
 - Use `dry_run "msg"` to gate side effects.
 - Never commit secrets. Use `.example` templates.

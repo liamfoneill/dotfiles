@@ -16,6 +16,9 @@ This is a macOS dotfiles repository that keeps a work machine (Stripe) and perso
 | `update.sh` | Convenience wrapper: `git pull` then `install.sh`. Auto-detects profile. |
 | `uninstall.sh` | Removes symlinks, optionally restores backups (`--restore`). |
 | `scripts/helpers.sh` | Shared logging, backup, and stow utilities. Sourced by other scripts — does NOT set shell options. |
+| `scripts/auto-sync.sh` | Headless hourly sync: snapshots configs, runs `git pull`, notifies if re-run needed. Runs via launchd. |
+| `scripts/rollback.sh` | Interactive: lists snapshots and restores a chosen one into the repo. |
+| `scripts/com.dotfiles.sync.plist` | launchd plist template. Placeholders `__DOTFILES_DIR__` and `__HOME__` are templated by `install.sh`. |
 
 ## Directory Layout
 
@@ -125,6 +128,14 @@ SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.s
 # Lint
 shellcheck install.sh uninstall.sh update.sh scripts/helpers.sh macos/defaults.sh hooks/post-merge --severity=warning --exclude=SC2059
 ```
+
+## Auto-Sync
+
+A launchd agent (`com.dotfiles.sync`) runs `scripts/auto-sync.sh` every hour. It snapshots symlinked configs before pulling, then sends a macOS notification if non-symlinked files changed. Snapshots go to `~/.dotfiles-backup/auto-sync/<timestamp>/` and are pruned to the last 10.
+
+The plist template at `scripts/com.dotfiles.sync.plist` uses `__DOTFILES_DIR__` and `__HOME__` placeholders that `install.sh` replaces with real paths at install time. The installed plist lives at `~/Library/LaunchAgents/com.dotfiles.sync.plist`.
+
+`scripts/rollback.sh` lists all snapshots (both auto-sync and install.sh backups) and restores them into the repo files (not just `$HOME`), so rollbacks persist across future pulls.
 
 ## Common Tasks
 

@@ -23,7 +23,7 @@ source "${SCRIPT_DIR}/scripts/helpers.sh"
 PROFILE=""
 DRY_RUN=false
 declare -A SKIP_MODULES=()
-TOTAL_MODULES=14
+TOTAL_MODULES=15
 
 usage() {
     cat <<'EOF'
@@ -57,6 +57,7 @@ usage() {
     fonts       Nerd Fonts (FiraCode, Hack, CaskaydiaCove)
     macos       macOS Finder & system preferences
     raycast     Raycast (manual import reminder)
+    auto-sync   Hourly launchd sync with backup + rollback
 
 EOF
 }
@@ -531,6 +532,61 @@ else
         fi
     ) && track_module "Raycast" "up-to-date" \
       || track_module "Raycast" "failed"
+fi
+
+# ===== MODULE 15: Auto-Sync ===================================================
+next_step "Auto-Sync (launchd)"
+
+if should_skip "auto-sync"; then
+    warn "Skipped (--skip auto-sync)"
+    track_module "Auto-Sync" "skipped"
+else
+    (
+        set -e
+        plist_label="com.dotfiles.sync"
+        plist_template="${DOTFILES_DIR}/scripts/com.dotfiles.sync.plist"
+        plist_dst="${HOME}/Library/LaunchAgents/${plist_label}.plist"
+        log_dir="${HOME}/.local/share/dotfiles"
+
+        mkdir -p "${HOME}/Library/LaunchAgents"
+        mkdir -p "$log_dir"
+
+        # Template the plist with actual paths
+        plist_rendered=$(sed \
+            -e "s|__DOTFILES_DIR__|${DOTFILES_DIR}|g" \
+            -e "s|__HOME__|${HOME}|g" \
+            "$plist_template")
+
+        needs_install=false
+        if [[ -f "$plist_dst" ]]; then
+            existing=$(cat "$plist_dst")
+            if [[ "$existing" != "$plist_rendered" ]]; then
+                needs_install=true
+                info "Plist changed — updating"
+            else
+                success "Auto-sync plist already up to date"
+            fi
+        else
+            needs_install=true
+        fi
+
+        if [[ "$needs_install" == "true" ]]; then
+            if ! dry_run "Install launchd plist for auto-sync"; then
+                # Unload existing if present
+                if launchctl list "$plist_label" >/dev/null 2>&1; then
+                    launchctl bootout "gui/$(id -u)" "$plist_dst" 2>/dev/null || true
+                fi
+
+                printf '%s' "$plist_rendered" > "$plist_dst"
+                launchctl bootstrap "gui/$(id -u)" "$plist_dst"
+                success "Installed and loaded auto-sync agent (hourly)"
+            fi
+        fi
+
+        info "Log: ${DIM}${log_dir}/sync.log${RESET}"
+        info "Rollback: ${DIM}./scripts/rollback.sh --latest${RESET}"
+    ) && track_module "Auto-Sync" "installed" \
+      || track_module "Auto-Sync" "failed"
 fi
 
 # ---------------------------------------------------------------------------

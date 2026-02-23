@@ -47,6 +47,7 @@ Every machine runs as either `work` or `personal`. The `--profile` flag controls
 | **macOS** (Finder, Dock, etc.) | `defaults write` | No (re-run install) |
 | **Stripe CLI** (config template) | File copy (template) | No (manual) |
 | **Raycast** | Manual export/import | No (manual) |
+| **Auto-Sync** | launchd agent (hourly) | Automatic (git pull) |
 
 ## What's NOT Synced
 
@@ -107,7 +108,10 @@ dotfiles/
 │   └── apps-personal.txt
 ├── scripts/
 │   ├── helpers.sh             # Shared logging and utility functions
-│   └── app-inventory.sh       # Scan /Applications and write tagged manifest
+│   ├── app-inventory.sh       # Scan /Applications and write tagged manifest
+│   ├── auto-sync.sh           # Hourly git pull + snapshot (runs via launchd)
+│   ├── rollback.sh            # List/restore config snapshots
+│   └── com.dotfiles.sync.plist  # launchd agent template
 └── .github/
     └── workflows/lint.yml     # CI: shellcheck + Brewfile validation
 ```
@@ -161,6 +165,7 @@ Preview what will happen without making changes:
 | `fonts` | `--skip fonts` | Nerd Fonts (FiraCode, Hack, CaskaydiaCove) |
 | `macos` | `--skip macos` | macOS Finder/Dock/keyboard prefs |
 | `raycast` | `--skip raycast` | Raycast import reminder |
+| `auto-sync` | `--skip auto-sync` | Hourly launchd sync with backup + rollback |
 
 ## How Syncing Works
 
@@ -275,7 +280,12 @@ Note: Homebrew packages, fonts, and macOS defaults are not reverted by uninstall
 
 ## Backups
 
-Before overwriting any existing file (including symlinks), the install script creates a timestamped backup in `~/.dotfiles-backup/`. These are excluded from the repo via `.gitignore`.
+Backups are stored in `~/.dotfiles-backup/` (excluded from the repo via `.gitignore`):
+
+- **Install backups** (`~/.dotfiles-backup/<timestamp>/`) -- created by `install.sh` before overwriting any existing file
+- **Auto-sync snapshots** (`~/.dotfiles-backup/auto-sync/<timestamp>/`) -- created by the hourly auto-sync before each `git pull`
+
+Use `./scripts/rollback.sh` to list all snapshots and `./scripts/rollback.sh --latest` to restore.
 
 ## Stripe CLI Setup
 
@@ -300,6 +310,55 @@ diff inventory/apps-work.txt inventory/apps-personal.txt
 ```
 
 Each app is tagged by install source: `[brew]`, `[system]`, `[corp]`, or `[manual]`. The script is read-only -- it lists apps but installs nothing.
+
+## Auto-Sync
+
+A launchd agent runs `git pull` every hour to keep symlinked configs up to date automatically. Before each pull, it snapshots all symlinked config files so you can roll back if a bad commit breaks something.
+
+### What it does
+
+1. Checks for upstream changes (skips if already up to date)
+2. Snapshots current config files to `~/.dotfiles-backup/auto-sync/<timestamp>/`
+3. Runs `git pull --ff-only`
+4. If non-symlinked files changed (Brewfile, fonts, macOS defaults), sends a macOS notification to re-run `install.sh`
+5. Prunes old snapshots (keeps last 10)
+6. Logs everything to `~/.local/share/dotfiles/sync.log`
+
+### Rollback
+
+If a pulled change breaks your config:
+
+```bash
+# List available snapshots
+./scripts/rollback.sh
+
+# Restore the most recent snapshot
+./scripts/rollback.sh --latest
+
+# Restore a specific snapshot
+./scripts/rollback.sh 20260223_143000
+```
+
+Rollback writes files back into the repo (not just `$HOME`), so the fix persists across future pulls until overwritten by a new commit.
+
+### Managing the agent
+
+```bash
+# Disable auto-sync
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.dotfiles.sync.plist
+
+# Re-enable auto-sync
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.dotfiles.sync.plist
+
+# Run manually
+./scripts/auto-sync.sh
+
+# Check the log
+tail -f ~/.local/share/dotfiles/sync.log
+
+# Skip during install (don't install the launchd agent)
+./install.sh --profile work --skip auto-sync
+```
 
 ## Raycast
 

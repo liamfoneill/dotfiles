@@ -58,6 +58,26 @@ else
     info "Rectangle plist not found (already removed or never installed)"
 fi
 
+# Auto-sync launchd agent
+header "Removing Auto-Sync Agent"
+
+plist_label="com.dotfiles.sync"
+plist_dst="${HOME}/Library/LaunchAgents/${plist_label}.plist"
+
+if launchctl list "$plist_label" >/dev/null 2>&1; then
+    launchctl bootout "gui/$(id -u)" "$plist_dst" 2>/dev/null || true
+    success "Unloaded auto-sync launchd agent"
+else
+    info "Auto-sync agent not loaded"
+fi
+
+if [[ -f "$plist_dst" ]]; then
+    rm "$plist_dst"
+    success "Removed ${plist_dst}"
+else
+    info "Auto-sync plist not found (already removed or never installed)"
+fi
+
 if [[ "$RESTORE" == "true" ]]; then
     header "Restoring Backups"
 
