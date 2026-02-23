@@ -149,7 +149,7 @@ fi
 ### ---------------------------------------------------------------------------
 
 function _right_arrow_accept_or_forward() {
-    if [[ -n "${POSTDISPLAY}" ]] && zle -l autosuggest-accept >/dev/null 2>&1; then
+    if (( CURSOR == ${#BUFFER} )) && [[ -n "${POSTDISPLAY}" ]] && zle -l autosuggest-accept >/dev/null 2>&1; then
         zle autosuggest-accept
         return
     fi
@@ -170,7 +170,7 @@ bindkey "^[OB" down-line-or-history
 bindkey "^F" _right_arrow_accept_or_forward
 
 function _opt_right_accept_word_or_forward_word() {
-    if [[ -n "${POSTDISPLAY}" ]] && zle -l autosuggest-accept-word >/dev/null 2>&1; then
+    if (( CURSOR == ${#BUFFER} )) && [[ -n "${POSTDISPLAY}" ]] && zle -l autosuggest-accept-word >/dev/null 2>&1; then
         zle autosuggest-accept-word
         return
     fi

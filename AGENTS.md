@@ -95,6 +95,27 @@ Never commit real credentials. Sensitive files are in `.gitignore`:
 
 Templates with `.example` suffix are committed instead.
 
+## GitHub & CI
+
+This repo lives on **github.com** (personal account `liamfoneill`), not Stripe enterprise.
+
+On the work laptop, `GH_HOST` defaults to `git.corp.stripe.com`, so always override:
+
+```bash
+# Check CI
+GH_HOST=github.com gh run list -R liamfoneill/dotfiles
+
+# View failed run logs
+GH_HOST=github.com gh run view <run-id> --log-failed -R liamfoneill/dotfiles
+```
+
+SSH to github.com is on port 443 (port 22 is blocked by the corporate network). Push with:
+
+```bash
+SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" \
+  GIT_SSH_COMMAND="/usr/bin/ssh" git push origin main
+```
+
 ## Testing Changes
 
 ```bash

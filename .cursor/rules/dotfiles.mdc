@@ -44,6 +44,15 @@ else
 fi
 ```
 
+## GitHub & Git
+
+This repo is on **github.com** (not Stripe enterprise). On the work laptop:
+- `GH_HOST` is set to `git.corp.stripe.com`, so always use `GH_HOST=github.com` with `gh` commands.
+- SSH goes through 1Password agent and must use port 443. Push with:
+  `SSH_AUTH_SOCK="$HOME/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock" GIT_SSH_COMMAND="/usr/bin/ssh" git push origin main`
+- Check CI: `GH_HOST=github.com gh run list -R liamfoneill/dotfiles`
+- View failed logs: `GH_HOST=github.com gh run view <run-id> --log-failed -R liamfoneill/dotfiles`
+
 ## Key Rules
 
 - `scripts/helpers.sh` is sourced, never executed. It must NOT set shell options.
