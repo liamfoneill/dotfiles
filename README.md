@@ -102,8 +102,12 @@ dotfiles/
 │   └── defaults.sh            # Finder, Dock, keyboard, sidebar preferences
 ├── raycast/
 │   └── README.md              # Manual import/export instructions
+├── inventory/                 # App snapshots per machine (for diffing)
+│   ├── apps-work.txt
+│   └── apps-personal.txt
 ├── scripts/
-│   └── helpers.sh             # Shared logging and utility functions
+│   ├── helpers.sh             # Shared logging and utility functions
+│   └── app-inventory.sh       # Scan /Applications and write tagged manifest
 └── .github/
     └── workflows/lint.yml     # CI: shellcheck + Brewfile validation
 ```
@@ -282,6 +286,20 @@ stripe login
 ```
 
 Real API keys are never committed to the repo (`.gitignore` excludes `config.toml`).
+
+## App Inventory
+
+Not everything can be managed by Homebrew (Mac App Store apps, corporate tools, direct downloads). The inventory script snapshots what's installed on each machine so you can compare and decide what to install manually.
+
+```bash
+# Snapshot this machine
+./scripts/app-inventory.sh
+
+# Compare machines (once both have been snapshotted and committed)
+diff inventory/apps-work.txt inventory/apps-personal.txt
+```
+
+Each app is tagged by install source: `[brew]`, `[system]`, `[corp]`, or `[manual]`. The script is read-only -- it lists apps but installs nothing.
 
 ## Raycast
 
