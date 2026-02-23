@@ -53,3 +53,5 @@ brew "stripe-internal/tap/git-stripe"
 
 # Collection of apps and services for photography, design, video, web, and UX
 cask "adobe-creative-cloud"
+# AI-first code editor
+cask "cursor"

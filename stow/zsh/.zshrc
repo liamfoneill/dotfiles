@@ -32,7 +32,13 @@ alias python="python3"
 alias pip="pip3"
 alias cls="clear"
 
-export EDITOR="cursor --wait"
+if command -v cursor >/dev/null 2>&1; then
+    export EDITOR="cursor --wait"
+elif command -v code >/dev/null 2>&1; then
+    export EDITOR="code --wait"
+else
+    export EDITOR="vim"
+fi
 export LANG="en_US.UTF-8"
 export DIRENV_LOG_FORMAT=
 

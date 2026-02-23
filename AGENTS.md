@@ -16,6 +16,7 @@ This is a macOS dotfiles repository that keeps a work machine (Stripe) and perso
 | `update.sh` | Convenience wrapper: `git pull` then `install.sh`. Auto-detects profile. |
 | `uninstall.sh` | Removes symlinks, optionally restores backups (`--restore`). |
 | `scripts/helpers.sh` | Shared logging, backup, and stow utilities. Sourced by other scripts — does NOT set shell options. |
+| `scripts/bootstrap.sh` | One-liner for a brand new Mac: installs CLT + Homebrew + clones repo + runs install.sh. Standalone (no helpers.sh). |
 | `scripts/auto-sync.sh` | Headless hourly sync: snapshots configs, runs `git pull`, notifies if re-run needed. Runs via launchd. |
 | `scripts/rollback.sh` | Interactive: lists snapshots and restores a chosen one into the repo. |
 | `scripts/com.dotfiles.sync.plist` | launchd plist template. Placeholders `__DOTFILES_DIR__` and `__HOME__` are templated by `install.sh`. |

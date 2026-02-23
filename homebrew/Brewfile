@@ -32,6 +32,8 @@ brew "gh"
 brew "git"
 # Syntax-highlighting pager for git and diff output
 brew "git-delta"
+# Git extension for versioning large files
+brew "git-lfs"
 # Tools and libraries to manipulate images in select formats
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
@@ -101,6 +103,8 @@ cask "cleanshot"
 cask "docker-desktop"
 # Collaborative team software
 cask "figma"
+# Fast, native terminal emulator
+cask "ghostty"
 # Desktop client for GitHub repositories
 cask "github"
 # Desktop automation application
@@ -109,6 +113,8 @@ cask "hammerspoon"
 cask "logitech-options"
 # Open-source software for live streaming and screen recording
 cask "obs"
+# Move and resize windows using keyboard shortcuts
+cask "rectangle"
 # Screenshot measurement and annotation tool
 cask "shottr"
 
@@ -119,6 +125,8 @@ cask "font-fira-code"
 cask "font-fira-code-nerd-font"
 cask "font-hack-nerd-font"
 
-# --- Cargo -------------------------------------------------------------------
+# --- Rust + Cargo ------------------------------------------------------------
 
+# Rust toolchain installer (required for cargo packages below)
+brew "rustup"
 cargo "purl"

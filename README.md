@@ -2,21 +2,43 @@
 
 Personal macOS dotfiles for keeping work and personal machines in sync. Uses [GNU Stow](https://www.gnu.org/software/stow/) for symlink management and a single idempotent install script with profile-based configuration.
 
-## Quick Start
+## Brand New Mac
+
+On a factory-fresh Mac (no git, no Homebrew), run this single command from Terminal:
 
 ```bash
-# Clone the repo (wherever you keep repositories)
+# Personal machine
+bash <(curl -fsSL https://raw.githubusercontent.com/liamfoneill/dotfiles/main/scripts/bootstrap.sh) --profile personal
+
+# Work machine
+bash <(curl -fsSL https://raw.githubusercontent.com/liamfoneill/dotfiles/main/scripts/bootstrap.sh) --profile work
+```
+
+This installs Xcode Command Line Tools, Homebrew, clones the repo to `~/dotfiles`, and runs the full installer. No prerequisites needed.
+
+### After install
+
+A few things need manual setup after the first run:
+
+1. **1Password** -- launch and sign in, then enable SSH agent (Settings > Developer > SSH Agent)
+2. **Git identity** -- edit `~/.gitconfig.local` with your name, email, and signing key
+3. **Git signing** -- once 1Password is set up, change `gpgsign = false` to `gpgsign = true` in `~/.gitconfig.local`
+4. **Stripe CLI** (work) -- run `stripe login` to authenticate
+5. **Raycast** -- import config manually (see `raycast/README.md`)
+
+## Quick Start
+
+If you already have git and Homebrew:
+
+```bash
 git clone https://github.com/liamfoneill/dotfiles.git
 cd dotfiles
 
-# Personal machine
-./install.sh --profile personal
-
-# Work machine (includes Stripe tooling, Cursor, work .zshrc, etc.)
-./install.sh --profile work
+./install.sh --profile personal     # Personal machine
+./install.sh --profile work         # Work machine
 ```
 
-That's it. The script handles Homebrew, symlinks, fonts, macOS preferences, and prints a summary report when done.
+The script handles Homebrew, symlinks, fonts, macOS preferences, and prints a summary report when done.
 
 ## Profiles
 
@@ -107,6 +129,7 @@ dotfiles/
 │   ├── apps-work.txt
 │   └── apps-personal.txt
 ├── scripts/
+│   ├── bootstrap.sh           # One-liner setup for a brand new Mac
 │   ├── helpers.sh             # Shared logging and utility functions
 │   ├── app-inventory.sh       # Scan /Applications and write tagged manifest
 │   ├── auto-sync.sh           # Hourly git pull + snapshot (runs via launchd)
@@ -247,9 +270,11 @@ The repo ships a shared `.gitconfig` with common settings (delta pager, 1Passwor
     name = Liam O'Neill
     email = liamfoneill@users.noreply.github.com
     signingkey = ssh-ed25519 YOUR_KEY_HERE
+[commit]
+    gpgsign = true
 ```
 
-The install script creates this file from a template on first run. Edit it with your personal or work identity.
+The install script creates this file from a template on first run (with signing disabled by default so git works immediately). Once 1Password is installed and your SSH key is configured, set `gpgsign = true` in `~/.gitconfig.local`.
 
 ## Finder Sidebar
 
