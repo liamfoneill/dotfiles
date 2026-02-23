@@ -67,33 +67,20 @@ Anything personal you want to keep should go in:
 
 The common Brewfile covers packages used on both machines. Work-specific packages are already set. But `homebrew/personal/Brewfile` is empty -- you need to fill it with anything that's personal-only.
 
-Dump what you currently have installed:
+Auto-populate it by dumping what's currently installed and subtracting everything already in the common and work Brewfiles:
 
 ```bash
 brew bundle dump --file=/tmp/personal-dump --force --describe
+comm -13 <(grep -E '^(brew|cask|tap)' homebrew/Brewfile homebrew/work/Brewfile | sed 's/#.*//' | awk '{print $1, $2}' | sort -u) <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | awk '{print $1, $2}' | sort -u) >> homebrew/personal/Brewfile
 ```
 
-Compare it with the common Brewfile to find what's different:
+This appends every package unique to your machine into `homebrew/personal/Brewfile`. Review the result and remove anything you don't want synced (e.g. one-off tools, dependencies you didn't install directly):
 
 ```bash
-diff -u <(grep -E '^(brew|cask|tap)' homebrew/Brewfile | sort) <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | sort)
+cat homebrew/personal/Brewfile
 ```
 
-Reading the output:
-- **`+` lines** — on your machine but not in the common Brewfile. These are your **personal-only** packages; add them to `homebrew/personal/Brewfile`.
-- **`-` lines** — in the common Brewfile but not on your machine yet. The installer will install these.
-- **no prefix** — already in both. Nothing to do.
-
-Add personal-only packages (apps blocked by corporate policy, personal tools, games, etc.) to `homebrew/personal/Brewfile`:
-
-```ruby
-# homebrew/personal/Brewfile
-cask "istat-menus"
-cask "steam"
-cask "vlc"
-```
-
-The app inventory script can also help identify what's installed:
+The app inventory script can also help identify non-Homebrew apps:
 
 ```bash
 ./scripts/app-inventory.sh
