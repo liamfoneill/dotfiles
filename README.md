@@ -49,10 +49,11 @@ The installer will **back up and replace** your existing `.zshrc`, `.gitconfig`,
 ls -la ~/.zshrc ~/.zprofile ~/.zshenv ~/.bash_profile 2>/dev/null
 
 # If you have an existing .zshrc, compare it with the repo version
-diff "$HOME/.zshrc" "$HOME/dotfiles/stow/zsh/.zshrc" 2>/dev/null
+# (unified diff: lines with - are yours, lines with + are the repo's)
+diff -u "$HOME/.zshrc" "$HOME/dotfiles/stow/zsh/.zshrc" 2>/dev/null
 
 # Same for gitconfig
-diff "$HOME/.gitconfig" "$HOME/dotfiles/stow/git/.gitconfig" 2>/dev/null
+diff -u "$HOME/.gitconfig" "$HOME/dotfiles/stow/git/.gitconfig" 2>/dev/null
 ```
 
 If you don't have a `.zshrc` yet (common on fresh-ish Macs where config lives in `.zprofile`), there's nothing to lose -- the installer will create one. Review your `.zprofile` for anything you want to keep.
@@ -76,8 +77,9 @@ Compare it with the common Brewfile to find what's different:
 
 ```bash
 # See what's on your machine but not in the common Brewfile
-diff <(grep -E '^(brew|cask|tap)' homebrew/Brewfile | sort) \
-     <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | sort)
+# (unified diff: - lines are in the repo, + lines are on your machine only)
+diff -u <(grep -E '^(brew|cask|tap)' homebrew/Brewfile | sort) \
+        <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | sort)
 ```
 
 Add personal-only packages (apps blocked by corporate policy, personal tools, games, etc.) to `homebrew/personal/Brewfile`:
@@ -435,7 +437,7 @@ Not everything can be managed by Homebrew (Mac App Store apps, corporate tools, 
 ./scripts/app-inventory.sh
 
 # Compare machines (once both have been snapshotted and committed)
-diff inventory/apps-work.txt inventory/apps-personal.txt
+diff -u inventory/apps-work.txt inventory/apps-personal.txt
 ```
 
 Each app is tagged by install source: `[brew]`, `[system]`, `[corp]`, or `[manual]`. The script is read-only -- it lists apps but installs nothing.
