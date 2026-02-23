@@ -156,7 +156,13 @@
     }
   ],
   "security.promptForLocalFileProtocolHandling": false,
-  "github-enterprise.uri": "https://git.corp.stripe.com/",
-  "http.proxy": "http://127.0.0.1:7891/",
-  "stripe.projectName": "clubware-us-sandbox"
+  "stripe.projectName": "clubware-us-sandbox",
+  "chat.agent.enabled": false,
+  "chat.agent.thinking.generateTitles": false,
+  "chat.agent.thinking.terminalTools": false,
+  "chat.agentsControl.enabled": false,
+  "chat.checkpoints.enabled": false,
+  "chat.disableAIFeatures": true,
+  "chatgpt.openOnStartup": true,
+  "workbench.sideBar.location": "right"
 }
