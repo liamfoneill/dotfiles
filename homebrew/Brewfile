@@ -40,8 +40,6 @@ brew "git-lfs"
 brew "imagemagick"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Manage Finder sidebar favorites from the command line
-brew "mysides"
 # Syntax-aware git merge driver
 brew "mergiraf"
 # Install NodeJS versions
@@ -93,8 +91,6 @@ brew "zsh-completions"
 cask "1password"
 # Command-line interface for 1Password
 cask "1password-cli"
-# View, print, and comment on PDF documents
-cask "adobe-acrobat-reader"
 # Memory training application
 cask "anki"
 # Menu bar icon organiser
@@ -111,14 +107,10 @@ cask "ghostty"
 cask "github"
 # Desktop automation application
 cask "hammerspoon"
-# Software for Logitech devices
-cask "logitech-options"
 # Open-source software for live streaming and screen recording
 cask "obs"
 # Move and resize windows using keyboard shortcuts
 cask "rectangle"
-# Screenshot measurement and annotation tool
-cask "shottr"
 
 # --- Fonts -------------------------------------------------------------------
 
@@ -129,6 +121,6 @@ cask "font-hack-nerd-font"
 
 # --- Rust + Cargo ------------------------------------------------------------
 
-# Rust toolchain installer (required for cargo packages below)
+# Rust toolchain installer (cargo packages are installed in install.sh
+# after rustup-init initializes the toolchain)
 brew "rustup"
-cargo "purl"

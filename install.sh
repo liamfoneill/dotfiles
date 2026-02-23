@@ -24,7 +24,7 @@ source "${SCRIPT_DIR}/scripts/helpers.sh"
 PROFILE=""
 DRY_RUN=false
 SKIP_MODULES=""
-TOTAL_MODULES=15
+TOTAL_MODULES=16
 
 usage() {
     cat <<'EOF'
@@ -198,6 +198,12 @@ if [[ "${BASH_VERSINFO[0]}" -lt 4 ]]; then
         else
             brew install bash
         fi
+        # Re-check both paths after install
+        if [[ -x "/opt/homebrew/bin/bash" ]]; then
+            brew_bash="/opt/homebrew/bin/bash"
+        elif [[ -x "/usr/local/bin/bash" ]]; then
+            brew_bash="/usr/local/bin/bash"
+        fi
     fi
 
     if [[ -x "$brew_bash" ]]; then
@@ -245,7 +251,41 @@ else
       || track_module "Homebrew" "failed"
 fi
 
-# ===== MODULE 2: Zsh =========================================================
+# ===== MODULE 2: Rust + Cargo ================================================
+next_step "Rust Toolchain & Cargo Packages"
+
+if should_skip "rust"; then
+    warn "Skipped (--skip rust)"
+    track_module "Rust" "skipped"
+else
+    (
+        set -e
+        if command -v rustup >/dev/null 2>&1; then
+            if ! rustup show active-toolchain >/dev/null 2>&1; then
+                if ! dry_run "rustup-init (initialize Rust toolchain)"; then
+                    rustup-init -y --no-modify-path
+                    source "${HOME}/.cargo/env"
+                    success "Rust toolchain initialized"
+                fi
+            else
+                success "Rust toolchain already active"
+            fi
+
+            if command -v cargo >/dev/null 2>&1; then
+                if ! dry_run "cargo install purl"; then
+                    cargo install purl 2>/dev/null && success "Installed purl" \
+                        || warn "purl installation failed (non-critical)"
+                fi
+            fi
+        else
+            warn "rustup not found — skipping cargo packages"
+            info "Install with: ${DIM}brew install rustup${RESET}"
+        fi
+    ) && track_module "Rust" "installed" \
+      || track_module "Rust" "failed"
+fi
+
+# ===== MODULE 3: Zsh =========================================================
 next_step "Zsh Configuration"
 
 if should_skip "zsh"; then
