@@ -80,10 +80,11 @@ This appends every package unique to your machine into `homebrew/personal/Brewfi
 cat homebrew/personal/Brewfile
 ```
 
-The app inventory script can also help identify non-Homebrew apps:
+The app inventory script can also help identify non-Homebrew apps. Run it on each machine, commit the results, and compare:
 
 ```bash
 ./scripts/app-inventory.sh
+diff -u inventory/apps-work.txt inventory/apps-personal.txt
 ```
 
 ### 4. Run the installer
