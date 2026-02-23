@@ -1,0 +1,55 @@
+# =============================================================================
+# Work-only Homebrew packages (Stripe)
+#
+# Only installed when running: ./install.sh --profile work
+# Install:  brew bundle --file=homebrew/work/Brewfile
+# =============================================================================
+
+# --- Stripe Internal Taps ----------------------------------------------------
+
+tap "sourcegraph/src-cli"
+tap "stripe-internal/tap", "/opt/stripe/homebrew_taps/stripe-internal/tap"
+
+# --- Work-specific CLI Tools -------------------------------------------------
+
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@77"
+# Format bazel BUILD files with a standard convention
+brew "buildifier"
+# Rewrite bazel BUILD files using standard commands
+brew "buildozer"
+# Open source programming language to build simple/reliable/efficient software
+brew "go@1.22"
+# Numerical library for C and C++
+brew "gsl"
+# Provides library functionality for FIDO U2F & FIDO 2.0, including USB
+brew "libfido2"
+# Postgres C API library
+brew "libpq"
+# GNOME XML library
+brew "libxml2"
+# C XSLT library for GNOME
+brew "libxslt"
+# PDF rendering library (based on the xpdf-3.0 code base)
+brew "poppler"
+# Object-relational database system
+brew "postgresql@14"
+# Object-relational database system
+brew "postgresql@17", restart_service: :changed
+# Easily detect and prevent bugs and anti-patterns in your codebase
+brew "semgrep"
+# SOcket CAT: netcat on steroids
+brew "socat"
+# Framework for scalable cross-language services development
+brew "thrift"
+# Watch files and take action when they change
+brew "watchman"
+# Sourcegraph CLI
+brew "sourcegraph/src-cli/src-cli"
+# Stripe internal git tooling
+brew "stripe-internal/tap/git-stripe"
+
+# --- Work-specific GUI Applications ------------------------------------------
+
+# Collection of apps and services for photography, design, video, web, and UX
+cask "adobe-creative-cloud"

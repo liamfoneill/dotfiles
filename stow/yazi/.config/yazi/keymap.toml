@@ -1,0 +1,6 @@
+[manager]
+prepend_keymap = [
+    { on = [
+        "O",
+    ], run = "shell --orphan 'qlmanage -p \"$@\" >/dev/null 2>&1'", desc = "Quick Look (macOS)" },
+]

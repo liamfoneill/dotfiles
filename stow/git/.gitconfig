@@ -1,0 +1,46 @@
+# Shared git configuration (managed by dotfiles).
+# Machine-specific identity (name, email, signing key) goes in ~/.gitconfig.local
+
+[include]
+    path = ~/.gitconfig.local
+
+[core]
+    pager = delta
+    preloadindex = true
+    deltabasecachelimit = 4g
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+
+[merge]
+    conflictStyle = zdiff3
+
+[push]
+    default = simple
+
+[fetch]
+    prune = true
+
+[feature]
+    manyFiles = true
+
+[help]
+    autocorrect = 50
+
+[commit]
+    gpgsign = true
+
+[gpg]
+    format = ssh
+
+[gpg "ssh"]
+    program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true

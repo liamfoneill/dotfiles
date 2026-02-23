@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Post-merge hook: remind to re-run install.sh when non-symlinked configs change.
+
+changed_files=$(git diff HEAD@{1} --name-only 2>/dev/null)
+
+needs_rerun=false
+reasons=()
+
+if echo "$changed_files" | grep -q "^homebrew/"; then
+    needs_rerun=true
+    reasons+=("Brewfile changed (new packages)")
+fi
+
+if echo "$changed_files" | grep -q "^fonts/"; then
+    needs_rerun=true
+    reasons+=("Fonts changed")
+fi
+
+if echo "$changed_files" | grep -q "^macos/"; then
+    needs_rerun=true
+    reasons+=("macOS defaults changed")
+fi
+
+if echo "$changed_files" | grep -q "rectangle"; then
+    needs_rerun=true
+    reasons+=("Rectangle config changed")
+fi
+
+if [[ "$needs_rerun" == "true" ]]; then
+    echo ""
+    echo "  ┌─────────────────────────────────────────────┐"
+    echo "  │  Re-run needed: ./update.sh or ./install.sh │"
+    echo "  └─────────────────────────────────────────────┘"
+    for reason in "${reasons[@]}"; do
+        echo "    → $reason"
+    done
+    echo ""
+fi

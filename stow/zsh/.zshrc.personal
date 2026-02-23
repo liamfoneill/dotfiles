@@ -1,0 +1,10 @@
+### ===========================================================================
+### ~/.zshrc.personal — Personal machine configuration
+###
+### This file is only symlinked on personal machines (install.sh --profile personal).
+### Add personal-specific aliases, env vars, and tool inits here.
+### ===========================================================================
+
+# Examples:
+# export ICLOUD_DIR="${HOME}/Library/Mobile Documents/com~apple~CloudDocs"
+# alias dev="cd ~/Developer/Github"

@@ -1,0 +1,19 @@
+# Machine-specific git identity.
+# Copy this file to ~/.gitconfig.local and fill in your details.
+#
+# Personal:
+#   [user]
+#       name = Liam O'Neill
+#       email = liamfoneill@users.noreply.github.com
+#       signingkey = ssh-ed25519 YOUR_PERSONAL_KEY
+#
+# Work:
+#   [user]
+#       name = Liam O'Neill
+#       email = 143192425+liamoneill-stripe@users.noreply.github.com
+#       signingkey = ssh-ed25519 YOUR_WORK_KEY
+
+[user]
+    name = REPLACE_ME
+    email = REPLACE_ME
+    signingkey = ssh-ed25519 REPLACE_ME

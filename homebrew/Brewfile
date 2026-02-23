@@ -1,0 +1,124 @@
+# =============================================================================
+# Common Homebrew packages (installed on all machines)
+#
+# Install:  brew bundle --file=homebrew/Brewfile
+# Check:    brew bundle check --file=homebrew/Brewfile
+# Dump:     brew bundle dump --file=homebrew/Brewfile --force --describe
+# =============================================================================
+
+# --- CLI Tools ---------------------------------------------------------------
+
+# Official Amazon AWS command-line interface
+brew "awscli"
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+# GNU File, Shell, and Text utilities
+brew "coreutils"
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
+# File comparison utilities
+brew "diffutils"
+# Load/unload environment variables based on $PWD
+brew "direnv"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+# Play, record, convert, and stream select audio and video codecs
+brew "ffmpeg"
+# Command-line fuzzy finder written in Go
+brew "fzf"
+# GitHub command-line tool
+brew "gh"
+# Distributed revision control system
+brew "git"
+# Syntax-highlighting pager for git and diff output
+brew "git-delta"
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+# Manage Finder sidebar favorites from the command line
+brew "mysides"
+# Syntax-aware git merge driver
+brew "mergiraf"
+# Install NodeJS versions
+brew "node-build"
+# Node.js version manager
+brew "nodenv"
+# Fast, disk space efficient package manager
+brew "pnpm"
+# Framework for managing multi-language pre-commit hooks
+brew "pre-commit"
+# Python version management
+brew "pyenv"
+# Ruby version manager
+brew "rbenv"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# Utility that provides fast incremental file transfer
+brew "rsync"
+# Static analysis and lint tool, for (ba)sh scripts
+brew "shellcheck"
+# Cross-shell prompt for astronauts
+brew "starship"
+# GNU Stow for dotfiles symlink management
+brew "stow"
+# Command-line unarchiving tools supporting multiple formats
+brew "unar"
+# Extremely fast Python package installer and resolver, written in Rust
+brew "uv"
+# Syntax-aware linter for prose
+brew "vale"
+# Vi 'workalike' with many additional features
+brew "vim"
+# Internet file retriever
+brew "wget"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
+# Feature-rich command-line audio/video downloader
+brew "yt-dlp"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Additional completion definitions for zsh
+brew "zsh-completions"
+
+# --- GUI Applications --------------------------------------------------------
+
+# Password manager that keeps all passwords secure behind one password
+cask "1password"
+# Command-line interface for 1Password
+cask "1password-cli"
+# View, print, and comment on PDF documents
+cask "adobe-acrobat-reader"
+# Memory training application
+cask "anki"
+# Menu bar icon organiser
+cask "bartender"
+# Screen capturing tool
+cask "cleanshot"
+# App to build and share containerised applications and microservices
+cask "docker-desktop"
+# Collaborative team software
+cask "figma"
+# Desktop client for GitHub repositories
+cask "github"
+# Desktop automation application
+cask "hammerspoon"
+# Software for Logitech devices
+cask "logitech-options"
+# Open-source software for live streaming and screen recording
+cask "obs"
+# Screenshot measurement and annotation tool
+cask "shottr"
+
+# --- Fonts -------------------------------------------------------------------
+
+cask "font-caskaydia-cove-nerd-font"
+cask "font-fira-code"
+cask "font-fira-code-nerd-font"
+cask "font-hack-nerd-font"
+
+# --- Cargo -------------------------------------------------------------------
+
+cargo "purl"

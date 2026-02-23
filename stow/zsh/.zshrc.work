@@ -1,0 +1,39 @@
+### ===========================================================================
+### ~/.zshrc.work — Stripe / work-specific configuration
+###
+### This file is only symlinked on work machines (install.sh --work).
+### It is sourced early from .zshrc so that Chef-managed shell init
+### runs before any shared config.
+### ===========================================================================
+
+
+### ---------------------------------------------------------------------------
+### Stripe Chef-managed shell init (must remain intact)
+### ---------------------------------------------------------------------------
+# All Stripe related shell configuration
+# is at ~/.stripe/shellinit/zshrc and is
+# persistently managed by Chef. You shouldn't
+# remove this unless you don't want to load
+# Stripe specific shell configurations.
+if [[ -f ~/.stripe/shellinit/zshrc ]]; then
+    source ~/.stripe/shellinit/zshrc
+fi
+
+
+### ---------------------------------------------------------------------------
+### Sourcegraph CLI (Stripe internal)
+### ---------------------------------------------------------------------------
+export SRC_ACCESS_TOKEN="${SRC_ACCESS_TOKEN:-}"
+export SRC_ENDPOINT="http://sourcegraph.corp.stripe.com"
+export SRC_PROXY="unix://${HOME}/.stripeproxy"
+
+
+### ---------------------------------------------------------------------------
+### Stripe CLI aliases
+### ---------------------------------------------------------------------------
+alias st="stripe"
+alias stt="stripe trigger"
+alias ste="stripe events list --limit 20"
+alias stw="stripe logs tail"
+alias stej="stripe events list --limit 20 | jq"
+alias stpj="stripe payment_intents list --limit 10 | jq"

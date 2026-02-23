@@ -1,0 +1,14 @@
+# =============================================================================
+# Personal-only Homebrew packages
+#
+# Only installed when running: ./install.sh --profile personal
+#
+# Add packages here that are blocked on your work laptop or only
+# needed on your personal machine.
+# =============================================================================
+
+# Examples:
+# cask "istat-menus"
+# cask "steam"
+# cask "vlc"
+# cask "transmission"

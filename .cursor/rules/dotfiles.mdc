@@ -1,0 +1,54 @@
+---
+description: Dotfiles repository conventions — profile system, stow modules, shell scripting patterns
+alwaysApply: true
+---
+
+# Dotfiles Conventions
+
+## Profile System
+
+Every install requires `--profile work` or `--profile personal`. There is no default.
+
+Configs use a three-way split: common (always), work overlay, personal overlay. Check profile with `[[ "$PROFILE" == "work" ]]`.
+
+## Stow Modules
+
+Configs live in `stow/<module>/` mirroring `$HOME`. Use `stow_module` / `unstow_module` helpers, not raw stow commands.
+
+## Brewfiles
+
+All Brewfiles are named exactly `Brewfile` (not `Brewfile.work`). The directory provides context:
+- `homebrew/Brewfile` — common
+- `homebrew/work/Brewfile` — work-only
+- `homebrew/personal/Brewfile` — personal-only
+
+## Shell Script Pattern
+
+Every module in `install.sh` follows:
+
+```bash
+next_step "Module Name"
+if should_skip "module"; then
+    warn "Skipped (--skip module)"
+    track_module "Module" "skipped"
+else
+    (
+        set -e
+        backup_file "$existing_file"
+        if ! dry_run "description"; then
+            stow_module "module"
+            success "Linked config"
+        fi
+    ) && track_module "Module" "installed" \
+      || track_module "Module" "failed"
+fi
+```
+
+## Key Rules
+
+- `scripts/helpers.sh` is sourced, never executed. It must NOT set shell options.
+- Use `backup_file` before overwriting any file.
+- Use `dry_run "msg"` to gate side effects.
+- Never commit secrets. Use `.example` templates.
+- Increment `TOTAL_MODULES` when adding a new module.
+- Add new modules to `uninstall.sh` too.

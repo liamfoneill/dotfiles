@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Secrets — never commit real credentials
+stow/stripe/.config/stripe/config.toml
+stow/git/.gitconfig.local
+
+# Homebrew lockfiles
+Brewfile.lock.json
+homebrew/**/Brewfile.lock.json
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Backup directory (local only)
+.dotfiles-backup/

@@ -1,0 +1,31 @@
+name: Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: ShellCheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ShellCheck
+        run: sudo apt-get install -y shellcheck
+      - name: Run ShellCheck
+        run: |
+          shellcheck install.sh uninstall.sh update.sh scripts/helpers.sh macos/defaults.sh hooks/post-merge \
+            --severity=warning \
+            --exclude=SC2059
+
+  brewfile:
+    name: Validate Brewfiles
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check common Brewfile syntax
+        run: brew bundle check --file=homebrew/Brewfile --no-upgrade 2>&1 || true
+      - name: List Brewfile entries
+        run: wc -l homebrew/Brewfile homebrew/work/Brewfile homebrew/personal/Brewfile

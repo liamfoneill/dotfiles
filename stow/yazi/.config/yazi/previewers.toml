@@ -1,0 +1,19 @@
+[[previewers]]
+mime = "text/*"
+run = "bat --style=numbers --color=always --paging=never \"$1\""
+
+[[previewers]]
+extension = "zip"
+run = "unzip -l \"$1\""
+
+[[previewers]]
+extension = "tar"
+run = "tar -tf \"$1\""
+
+[[previewers]]
+extension = "tar.gz"
+run = "tar -tzf \"$1\""
+
+[[previewers]]
+mime = "text/*"
+run = "cat \"$1\""

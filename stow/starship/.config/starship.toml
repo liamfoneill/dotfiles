@@ -1,0 +1,152 @@
+# Starship configuration (information dense)
+# Focus: Git, Python, Node, Terraform, cloud tooling.
+# Note: Custom modules can add latency if they call networked CLIs. This file keeps them lightweight.
+
+add_newline = false
+command_timeout = 3000
+scan_timeout = 30
+
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$git_metrics\
+$fill\
+$nodejs\
+$bun\
+$python\
+$terraform\
+$aws\
+$gcloud\
+$cmd_duration\
+$line_break\
+$character
+"""
+
+[fill]
+symbol = " "
+
+[username]
+show_always = true
+style_user = "bold cyan"
+format = "[$user]($style) "
+
+[hostname]
+ssh_only = true
+style = "bold yellow"
+format = "on [$hostname]($style) "
+
+[directory]
+style = "bold blue"
+truncate_to_repo = true
+truncation_length = 3
+format = "[$path]($style) "
+
+[cmd_duration]
+min_time = 700
+style = "bold yellow"
+format = "took [$duration]($style) "
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold purple)"
+
+# ----------------------------
+# Git
+# ----------------------------
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "bold red"
+format = "[\\[$all_status$ahead_behind\\]]($style) "
+conflicted = "!"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+untracked = "?"
+stashed = "$"
+modified = "*"
+staged = "+"
+renamed = "»"
+deleted = "x"
+
+[git_metrics]
+disabled = false
+only_nonzero_diffs = true
+format = "([+$added]($added_style) [-$deleted]($deleted_style) )"
+
+
+# ----------------------------
+# Terraform
+# ----------------------------
+
+[terraform]
+disabled = false
+format = "tf:[$workspace]($style) | "
+style = "bold 105"
+
+# ----------------------------
+# Node
+# ----------------------------
+
+[nodejs]
+disabled = false
+symbol = " "
+format = "[$symbol$version]($style) "
+style = "bold green"
+detect_files = [
+    "package.json",
+    ".node-version",
+    "pnpm-lock.yaml",
+    "yarn.lock",
+    "package-lock.json",
+]
+detect_folders = ["node_modules"]
+
+# ----------------------------
+# BUN
+# ----------------------------
+
+[bun]
+disabled = false
+symbol = "🥟 "
+format = " via [$symbol$version]($style)"
+style = "bold 208"
+detect_files = ["bun.lock", "bun.lockb", "bunfig.toml"]
+detect_folders = ["node_modules"]
+
+# ----------------------------
+# Python
+# ----------------------------
+
+[python]
+disabled = false
+format = "py:[$version]($style) | "
+style = "bold 214"
+# Show venv name when active
+python_binary = ["python3", "python"]
+detect_extensions = ["py"]
+detect_files = ["pyproject.toml", "requirements.txt", "Pipfile", "poetry.lock"]
+detect_folders = [".venv", "venv"]
+
+# ----------------------------
+# Cloud
+# ----------------------------
+
+[aws]
+disabled = false
+format = "aws:[$profile]($style) | "
+style = "bold yellow"
+
+[gcloud]
+disabled = false
+format = "gcp:[$account@$project]($style) | "
+style = "bold blue"

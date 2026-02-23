@@ -1,0 +1,63 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+alt+d",
+        "command": "workbench.action.terminal.split",
+        "when": "terminalFocus && terminalProcessSupported || terminalFocus && terminalWebExtensionContributedProfile"
+    },
+    {
+        "key": "ctrl+shift+d",
+        "command": "workbench.action.splitEditorDown"
+    },
+    {
+        "key": "cmd+t",
+        "command": "workbench.action.files.newUntitledFile"
+    },
+    {
+        "key": "ctrl+alt+right",
+        "command": "workbench.action.nextEditor"
+    },
+    {
+        "key": "ctrl+alt+left",
+        "command": "workbench.action.previousEditor"
+    },
+    {
+        "key": "alt+cmd+right",
+        "command": "workbench.action.focusRightGroup"
+    },
+    {
+        "key": "alt+cmd+left",
+        "command": "workbench.action.focusLeftGroup"
+    },
+    {
+        "key": "alt+cmd+up",
+        "command": "workbench.action.focusAboveGroup"
+    },
+    {
+        "key": "alt+cmd+down",
+        "command": "workbench.action.focusBelowGroup"
+    },
+    {
+        "key": "ctrl+alt+e",
+        "command": "workbench.action.evenEditorWidths"
+    },
+    {
+        "key": "ctrl+alt+f",
+        "command": "workbench.action.toggleEditorWidths"
+    },
+    {
+        "key": "ctrl+alt+d",
+        "command": "workbench.action.splitEditorRight",
+        "when": "editorTextFocus && !terminalFocus"
+    },
+    {
+        "key": "cmd+w",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "editorFocus && !terminalFocus"
+    },
+    {
+        "key": "cmd+w",
+        "command": "workbench.action.terminal.kill",
+        "when": "terminalFocus"
+    }
+]

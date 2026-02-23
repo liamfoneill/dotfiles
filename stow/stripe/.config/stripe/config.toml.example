@@ -1,0 +1,18 @@
+# Stripe CLI configuration template
+#
+# This is a template with placeholder values. Do NOT commit real API keys.
+# After copying this file, run `stripe login` to authenticate each project.
+#
+# Usage:
+#   cp config.toml.example config.toml
+#   stripe login
+
+color = ''
+installed_plugins = ['preview']
+project-name = 'your-default-project'
+
+[your-project-name]
+device_name = 'your-device-name'
+display_name = 'Your Project Name'
+test_mode_api_key = 'sk_test_REPLACE_ME'
+test_mode_key_expires_at = '2030-01-01'

@@ -1,0 +1,5 @@
+[opener]
+open = [{ run = "open \"$@\"", desc = "Open (macOS)", for = "macos" }]
+
+[open]
+rules = [{ name = "*", use = "open" }]
