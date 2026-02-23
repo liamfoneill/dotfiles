@@ -12,6 +12,7 @@
 
 set -uo pipefail
 
+ORIGINAL_ARGS=("$@")
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=scripts/helpers.sh
@@ -22,7 +23,7 @@ source "${SCRIPT_DIR}/scripts/helpers.sh"
 # ---------------------------------------------------------------------------
 PROFILE=""
 DRY_RUN=false
-declare -A SKIP_MODULES=()
+SKIP_MODULES=""
 TOTAL_MODULES=15
 
 usage() {
@@ -83,7 +84,7 @@ while [[ $# -gt 0 ]]; do
                 error "--skip requires a module name"
                 exit 1
             fi
-            SKIP_MODULES["$2"]=1
+            SKIP_MODULES="${SKIP_MODULES} $2 "
             shift 2
             ;;
         --help|-h)  usage; exit 0 ;;
@@ -105,7 +106,7 @@ export DRY_RUN
 export PROFILE
 
 should_skip() {
-    [[ -n "${SKIP_MODULES[${1}]:-}" ]]
+    [[ "$SKIP_MODULES" == *" $1 "* ]]
 }
 
 # ---------------------------------------------------------------------------
@@ -180,6 +181,33 @@ if [[ -f "$hook_src" && -d "${DOTFILES_DIR}/.git/hooks" ]]; then
     fi
     success "Post-merge git hook"
 fi
+
+# ---------------------------------------------------------------------------
+# Ensure modern bash (re-exec under Homebrew bash if running on 3.x)
+# ---------------------------------------------------------------------------
+if [[ "${BASH_VERSINFO[0]}" -lt 4 ]]; then
+    brew_bash="/opt/homebrew/bin/bash"
+    if [[ ! -x "$brew_bash" ]]; then
+        brew_bash="/usr/local/bin/bash"
+    fi
+
+    if [[ ! -x "$brew_bash" ]]; then
+        info "Installing modern bash..."
+        if [[ "$DRY_RUN" == "true" ]]; then
+            info "${DIM}[dry-run]${RESET} brew install bash"
+        else
+            brew install bash
+        fi
+    fi
+
+    if [[ -x "$brew_bash" ]]; then
+        info "Re-launching under bash $("$brew_bash" --version 2>/dev/null | head -1 | awk '{print $4}')..."
+        exec "$brew_bash" "$0" "${ORIGINAL_ARGS[@]}"
+    elif [[ "$DRY_RUN" != "true" ]]; then
+        warn "Could not find Homebrew bash — continuing with bash ${BASH_VERSION}"
+    fi
+fi
+success "Bash ${BASH_VERSION}"
 
 # ---------------------------------------------------------------------------
 # Module counter
