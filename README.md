@@ -26,6 +26,105 @@ A few things need manual setup after the first run:
 4. **Stripe CLI** (work) -- run `stripe login` to authenticate
 5. **Raycast** -- import config manually (see `raycast/README.md`)
 
+## Setting Up an Existing Mac
+
+If your machine already has most things installed (Homebrew, apps, configs), follow this sequence to adopt the dotfiles without losing anything.
+
+### 1. Clone and preview
+
+```bash
+git clone https://github.com/liamfoneill/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./install.sh --profile personal --dry-run
+```
+
+The dry run shows exactly what would happen without touching anything. Review the output.
+
+### 2. Review your existing configs
+
+The installer will **back up and replace** your existing `.zshrc`, `.gitconfig`, and other dotfiles. Before running for real, check what you'll lose:
+
+```bash
+# Compare your current zshrc with the repo version
+diff ~/.zshrc stow/zsh/.zshrc
+
+# Same for gitconfig
+diff ~/.gitconfig stow/git/.gitconfig
+```
+
+Anything personal you want to keep should go in:
+- `stow/zsh/.zshrc.personal` -- personal shell config (sourced by the shared `.zshrc`)
+- `~/.zshrc.local` -- machine-specific overrides (not in the repo, never synced)
+- `~/.gitconfig.local` -- git identity and signing (created from template on first run)
+
+### 3. Populate your personal Brewfile
+
+The common Brewfile covers packages used on both machines. Work-specific packages are already set. But `homebrew/personal/Brewfile` is empty -- you need to fill it with anything that's personal-only.
+
+Dump what you currently have installed:
+
+```bash
+brew bundle dump --file=/tmp/personal-dump --force --describe
+```
+
+Compare it with the common Brewfile to find what's different:
+
+```bash
+# See what's on your machine but not in the common Brewfile
+diff <(grep -E '^(brew|cask|tap)' homebrew/Brewfile | sort) \
+     <(grep -E '^(brew|cask|tap)' /tmp/personal-dump | sort)
+```
+
+Add personal-only packages (apps blocked by corporate policy, personal tools, games, etc.) to `homebrew/personal/Brewfile`:
+
+```ruby
+# homebrew/personal/Brewfile
+cask "istat-menus"
+cask "steam"
+cask "vlc"
+```
+
+The app inventory script can also help identify what's installed:
+
+```bash
+./scripts/app-inventory.sh
+```
+
+### 4. Run the installer
+
+```bash
+./install.sh --profile personal
+```
+
+Everything is idempotent -- already-installed Homebrew packages are skipped, identical fonts are skipped, and `defaults write` with the same value is a no-op. Your original configs are saved to `~/.dotfiles-backup/<timestamp>/`.
+
+### 5. Post-install
+
+1. **1Password** -- launch and sign in, enable SSH agent (Settings > Developer > SSH Agent)
+2. **Git identity** -- edit `~/.gitconfig.local` with your name, email, and signing key
+3. **Git signing** -- change `gpgsign = false` to `gpgsign = true` in `~/.gitconfig.local`
+4. **Rust** -- run `rustup-init` (Homebrew installs `rustup` but the toolchain needs init)
+5. **Raycast** -- import config manually (see `raycast/README.md`)
+6. **Finder sidebar** -- create `~/.dotfiles-sidebar` for personal sidebar items (see [Finder Sidebar](#finder-sidebar))
+7. **Commit your Brewfile** -- push your personal Brewfile back to the repo
+
+```bash
+cd ~/dotfiles
+git add homebrew/personal/Brewfile
+git commit -m "Add personal Brewfile"
+git push
+```
+
+### Rolling back
+
+If something breaks, restore your original configs:
+
+```bash
+./scripts/rollback.sh --latest
+# Or fully uninstall and restore:
+./uninstall.sh --restore
+```
+
 ## Quick Start
 
 If you already have git and Homebrew:
