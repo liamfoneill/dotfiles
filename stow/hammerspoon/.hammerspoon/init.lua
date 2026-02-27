@@ -71,3 +71,116 @@ hs.hotkey.bind({ "shift", "option" }, "up", function()
         focused:maximize()
     end
 end)
+
+--------------------------------------------------------------------------------
+-- File Mover — auto-move new files by extension (mini Hazel)
+--------------------------------------------------------------------------------
+--
+-- Add rules to the fileMoverRules table below. Each rule needs:
+--   source    = watched directory (tilde is expanded)
+--   dest      = destination directory
+--   ext       = file extension to match (with or without leading dot)
+--   notify    = (optional, default true) show a macOS notification on move
+--
+-- Example:
+--   { source = "~/Downloads", dest = "~/Documents/PDFs", ext = ".pdf" },
+--   { source = "~/Desktop",   dest = "~/Pictures/Screenshots", ext = "png", notify = false },
+
+local fileMoverRules = {
+    {
+        source = "/Users/liamoneill/Library/CloudStorage/GoogleDrive-liamoneill@stripe.com/My Drive/Pictures/Screenshots",
+        dest   = "/Users/liamoneill/Screen Recordings",
+        ext    = ".mp4",
+    },
+}
+
+local fileMoverTempExts = { ".part", ".crdownload", ".tmp", ".download", ".partial" }
+
+local function fileMoverExpandPath(path)
+    if path:sub(1, 1) == "~" then
+        return os.getenv("HOME") .. path:sub(2)
+    end
+    return path
+end
+
+local function fileMoverNormalizeExt(ext)
+    ext = ext:lower()
+    if ext:sub(1, 1) ~= "." then ext = "." .. ext end
+    return ext
+end
+
+local function fileMoverIsTempExt(ext)
+    for _, tmp in ipairs(fileMoverTempExts) do
+        if ext:lower() == tmp then return true end
+    end
+    return false
+end
+
+local function fileMoverSafeDest(destDir, filename)
+    local target = destDir .. "/" .. filename
+    if not hs.fs.attributes(target) then return target end
+
+    local name, extension = filename:match("^(.+)(%.%w+)$")
+    if not name then
+        name = filename
+        extension = ""
+    end
+
+    local counter = 1
+    while true do
+        local candidate = destDir .. "/" .. name .. " (" .. counter .. ")" .. extension
+        if not hs.fs.attributes(candidate) then return candidate end
+        counter = counter + 1
+    end
+end
+
+local function fileMoverProcessFile(filePath, rule)
+    local filename = filePath:match("([^/]+)$")
+    if not filename then return end
+
+    local ext = filename:match("(%.%w+)$")
+    if not ext then return end
+
+    if fileMoverIsTempExt(ext) then return end
+    if ext:lower() ~= rule._ext then return end
+
+    hs.timer.doAfter(0.5, function()
+        local attrs = hs.fs.attributes(filePath)
+        if not attrs or attrs.mode == "directory" then return end
+
+        local destPath = fileMoverSafeDest(rule._dest, filename)
+        local ok, err = os.rename(filePath, destPath)
+        if ok then
+            print("[File Mover] Moved " .. filename .. " → " .. destPath)
+            if rule.notify ~= false then
+                hs.notify.show("File Mover", "", "Moved " .. filename)
+            end
+        else
+            print("[File Mover] Failed to move " .. filename .. ": " .. tostring(err))
+        end
+    end)
+end
+
+local fileMoverWatchers = {}
+
+for _, rule in ipairs(fileMoverRules) do
+    local src = fileMoverExpandPath(rule.source)
+    local dest = fileMoverExpandPath(rule.dest)
+    rule._ext = fileMoverNormalizeExt(rule.ext)
+    rule._dest = dest
+
+    if hs.fs.attributes(src, "mode") ~= "directory" then
+        print("[File Mover] Warning: source does not exist: " .. src)
+    elseif hs.fs.attributes(dest, "mode") ~= "directory" then
+        print("[File Mover] Warning: destination does not exist: " .. dest)
+    else
+        local watcher = hs.pathwatcher.new(src, function(paths)
+            for _, path in ipairs(paths) do
+                fileMoverProcessFile(path, rule)
+            end
+        end)
+        watcher:start()
+        table.insert(fileMoverWatchers, watcher)
+        print("[File Mover] Watching " .. src .. " for *" .. rule._ext .. " → " .. dest)
+    end
+end

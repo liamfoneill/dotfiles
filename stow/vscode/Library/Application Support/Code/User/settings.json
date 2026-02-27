@@ -94,7 +94,7 @@
   "remote.otherPortsAttributes": {
     "onAutoForward": "ignore"
   },
-  "workbench.colorTheme": "Abyss",
+  "workbench.colorTheme": "Catppuccin Mocha",
   "gitlens.ai.experimental.generateCommitMessage.enabled": false,
   "python.defaultInterpreterPath": "/Users/liamoneill/.pyenv/versions/3.11.6/bin/python",
   "files.autoSave": "onFocusChange",

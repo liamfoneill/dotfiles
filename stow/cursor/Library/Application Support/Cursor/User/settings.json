@@ -1,159 +1,162 @@
 {
-    "security.workspace.trust.banner": "never",
-    "security.workspace.trust.enabled": false,
-    "security.workspace.trust.startupPrompt": "never",
-    "codeQL.telemetry.enableTelemetry": true,
-    "editor.inlineSuggest.enabled": true,
-    "editor.fontFamily": "'CaskaydiaCove NF'",
-    "editor.fontLigatures": true,
-    "azure.resourceFilter": [
-        "72b0053c-b567-4856-ad61-c0727efcb959/c84774da-ce3a-438c-86d5-99cba6a232e7",
-        "72f988bf-86f1-41af-91ab-2d7cd011db47/fa8475b7-3688-4174-ba2c-34124cc3252f",
-        "1edaad83-b2ef-483d-81f1-2c48682f40ec/441f0e56-1f8c-43e1-ba62-fb41dba1430c",
-        "1edaad83-b2ef-483d-81f1-2c48682f40ec/f6154d7d-d0d6-42fd-8cc2-389470b02c69",
-        "1edaad83-b2ef-483d-81f1-2c48682f40ec/0d4f29d0-7044-4fa7-be0e-0897271c5d5e",
-        "c4db2467-c39f-4a33-8094-8019ca5d9add/4d5283fd-15e1-4b28-b7c9-02c6960e07a6",
-        "f43111b6-c9d9-4062-9aec-8bf8c345e9ab/afe07a9d-e6de-4b4c-91eb-3ae7265a9245"
-    ],
-    "terminal.integrated.defaultProfile.windows": "PowerShell",
-    "redhat.telemetry.enabled": true,
-    "git.confirmSync": false,
-    "git.enableSmartCommit": true,
-    "github.copilot.enable": {
-      "*": false,
-      "apex": true,
-      "erb": true,
-      "go": true,
-      "java": true,
-      "javascript": true,
-      "python": true,
-      "ruby": true,
-      "rust": true,
-      "scala": true,
-      "shellscript": true,
-      "starlark": true,
-      "terraform": true,
-      "typescript": true,
-      "typescriptreact": true
-    },
-    "editor.fontSize": 16,
-    "git.autofetch": true,
-    "mssql.connections": [
-        {
-            "server": "{{put-server-name-here}}",
-            "database": "{{put-database-name-here}}",
-            "user": "{{put-username-here}}",
-            "password": ""
-        }
-    ],
-    "terminal.integrated.ignoreProcessNames": [
-        "starship",
-        "bash",
-        "zsh"
-    ],
-    "workbench.startupEditor": "none",
-    "settingsSync.ignoredSettings": [
-        "terminal.integrated.profiles.windows"
-    ],
-    "explorer.confirmDelete": false,
-    "explorer.confirmDragAndDrop": false,
-    "yaml.schemas": {
-        "file:///c%3A/Users/Liam/.vscode/extensions/atlassian.atlascode-2.10.5/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
-    },
-    "atlascode.jira.enabled": false,
-    "azureResourceManagerTools.parameterFiles": {
-        "c:\\users\\lioneill\\repositories\\logic-apps-sftp\\sftp-preprod.definition.json": "sftp-preprod.parameters.json",
-        "c:\\users\\liam\\repositories\\arm\\azuredeploy.json": "azuredeploy.parameters.json"
-    },
-    "powershell.promptToUpdatePowerShell": false,
-    "azureResourceGroups.groupBy": "resourceGroup",
-    "window.title": "${rootPath}${separator}${activeEditorMedium}",
-    "telemetry.telemetryLevel": "off",
-    "remote.autoForwardPorts": false,
-    "remote.restoreForwardedPorts": false,
-    "remote.SSH.enableAgentForwarding": false,
-    "remote.SSH.path": "sc-ssh-wrapper",
-    "remote.SSH.useLocalServer": true,
-    "remote.SSH.connectTimeout": 60,
-    "remote.SSH.configFile": "~/.ssh/devboxes",
-    "remote.SSH.enableRemoteCommand": true,
-    "search.followSymlinks": false,
-    "debug.javascript.automaticallyTunnelRemoteServer": false,
-    "gitlens.remotes": [
-      {
-        "domain": "git.corp.stripe.com",
-        "type": "GitHub"
-      }
-    ],
-    "ruby.rubocop.hideDisableSuggestions": true,
-    "typescript.tsdk": "~/stripe/pay-server/frontend/js-scripts/node_modules/typescript/lib",
-    "terminal.integrated.fontSize": 16,
-    "stripe.cliInstallPath": "/usr/local/bin/stripe",
-    "remote.forwardOnOpen": false,
-    "remote.otherPortsAttributes": {
-      "onAutoForward": "ignore"
-    },
-    "workbench.colorTheme": "Abyss",
-    "gitlens.ai.experimental.generateCommitMessage.enabled": false,
-    "python.defaultInterpreterPath": "/Users/liamoneill/.pyenv/versions/3.11.6/bin/python",
-    "files.autoSave": "onFocusChange",
-    "editor.multiCursorModifier": "ctrlCmd",
-    "editor.wordWrap": "on",
-    "editor.formatOnSave": true,
-    "remote.SSH.enableDynamicForwarding": false,
-    "workbench.iconTheme": "Monokai Pro Icons",
-    "azureLogicAppsStandard.autoRuntimeDependenciesPath": "C:\\Users\\liamf\\.azurelogicapps\\dependencies",
-    "azureLogicAppsStandard.nodeJsBinaryPath": "node",
-    "settingsSync.ignoredExtensions": [
-        "azurepolicy.azurepolicyextension"
-    ],
-    "azureLogicAppsStandard.funcCoreToolsBinaryPath": "func",
-    "azureLogicAppsStandard.dotnetBinaryPath": "dotnet",
-    "remote.autoForwardPortsSource": "output",
-    "cody.override.serverEndpoint": "http://sourcegraph.corp.stripe.com",
-    "cody.override.authToken": "sgp_unused_but_must_be_nonempty",
-    "cody.net.proxy.endpoint": "unix://~/.stripeproxy",
-    "window.customTitleBarVisibility": "windowed",
-    "security.promptForRemoteFileProtocolHandling": false,
-    "chat.instructionsFilesLocations": {
-        ".github/instructions": true,
-        "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-collections-post-response.instructions.md": true,
-        "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-collections-pre-request.instructions.md": true,
-        "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-folder-post-response.instructions.md": true,
-        "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-folder-pre-request.instructions.md": true,
-        "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-http-request-post-response.instructions.md": true,
-        "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-http-request-pre-request.instructions.md": true,
-        "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-collections-post-response.instructions.md": true,
-        "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-collections-pre-request.instructions.md": true,
-        "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-folder-post-response.instructions.md": true,
-        "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-folder-pre-request.instructions.md": true,
-        "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-http-request-post-response.instructions.md": true,
-        "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-http-request-pre-request.instructions.md": true
-    },
-    "gitlens.ai.enabled": false,
-    "typescript.native-preview.tsdk": "frontend/js-scripts/scripts",
-    "postman.mcp.notifications.postmanMCP": false,
-    "chat.mcp.gallery.enabled": true,
-    "claudeCode.claudeProcessWrapper": "/usr/local/bin/claude",
-    "claudeCode.environmentVariables": [
-      {
-        "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
-        "value": "true"
-      }
-    ],
-    "github.copilot.nextEditSuggestions.enabled": true,
-    "workbench.quickOpen.closeOnFocusLost": false,
-    "application.shellEnvironmentResolutionTimeout": 100,
-    "git.openRepositoryInParentFolders": "always",
-    "claudeCode.preferredLocation": "panel",
-    "claude-code.claudeProcessWrapper": "/usr/local/bin/claude",
-    "claude-code.environmentVariables": [
-      {
-        "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
-        "value": "true"
-      }
-    ],
-    "cursor.composer.shouldChimeAfterChatFinishes": true,
-    "cursor.cpp.enablePartialAccepts": true,
-    "update.mode": "none"
+  "security.workspace.trust.banner": "never",
+  "security.workspace.trust.enabled": false,
+  "security.workspace.trust.startupPrompt": "never",
+  "codeQL.telemetry.enableTelemetry": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.fontFamily": "'CaskaydiaCove NF'",
+  "editor.fontLigatures": true,
+  "azure.resourceFilter": [
+    "72b0053c-b567-4856-ad61-c0727efcb959/c84774da-ce3a-438c-86d5-99cba6a232e7",
+    "72f988bf-86f1-41af-91ab-2d7cd011db47/fa8475b7-3688-4174-ba2c-34124cc3252f",
+    "1edaad83-b2ef-483d-81f1-2c48682f40ec/441f0e56-1f8c-43e1-ba62-fb41dba1430c",
+    "1edaad83-b2ef-483d-81f1-2c48682f40ec/f6154d7d-d0d6-42fd-8cc2-389470b02c69",
+    "1edaad83-b2ef-483d-81f1-2c48682f40ec/0d4f29d0-7044-4fa7-be0e-0897271c5d5e",
+    "c4db2467-c39f-4a33-8094-8019ca5d9add/4d5283fd-15e1-4b28-b7c9-02c6960e07a6",
+    "f43111b6-c9d9-4062-9aec-8bf8c345e9ab/afe07a9d-e6de-4b4c-91eb-3ae7265a9245"
+  ],
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "redhat.telemetry.enabled": true,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "github.copilot.enable": {
+    "*": false,
+    "apex": true,
+    "erb": true,
+    "go": true,
+    "java": true,
+    "javascript": true,
+    "python": true,
+    "ruby": true,
+    "rust": true,
+    "scala": true,
+    "shellscript": true,
+    "starlark": true,
+    "terraform": true,
+    "typescript": true,
+    "typescriptreact": true
+  },
+  "editor.fontSize": 16,
+  "git.autofetch": true,
+  "mssql.connections": [
+    {
+      "server": "{{put-server-name-here}}",
+      "database": "{{put-database-name-here}}",
+      "user": "{{put-username-here}}",
+      "password": ""
+    }
+  ],
+  "terminal.integrated.ignoreProcessNames": [
+    "starship",
+    "bash",
+    "zsh"
+  ],
+  "workbench.startupEditor": "none",
+  "settingsSync.ignoredSettings": [
+    "terminal.integrated.profiles.windows"
+  ],
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "yaml.schemas": {
+    "file:///c%3A/Users/Liam/.vscode/extensions/atlassian.atlascode-2.10.5/resources/schemas/pipelines-schema.json": "bitbucket-pipelines.yml"
+  },
+  "atlascode.jira.enabled": false,
+  "azureResourceManagerTools.parameterFiles": {
+    "c:\\users\\lioneill\\repositories\\logic-apps-sftp\\sftp-preprod.definition.json": "sftp-preprod.parameters.json",
+    "c:\\users\\liam\\repositories\\arm\\azuredeploy.json": "azuredeploy.parameters.json"
+  },
+  "powershell.promptToUpdatePowerShell": false,
+  "azureResourceGroups.groupBy": "resourceGroup",
+  "window.title": "${rootPath}${separator}${activeEditorMedium}",
+  "telemetry.telemetryLevel": "off",
+  "remote.autoForwardPorts": false,
+  "remote.restoreForwardedPorts": false,
+  "remote.SSH.enableAgentForwarding": false,
+  "remote.SSH.path": "sc-ssh-wrapper",
+  "remote.SSH.useLocalServer": true,
+  "remote.SSH.connectTimeout": 60,
+  "remote.SSH.configFile": "~/.ssh/devboxes",
+  "remote.SSH.enableRemoteCommand": true,
+  "search.followSymlinks": false,
+  "debug.javascript.automaticallyTunnelRemoteServer": false,
+  "gitlens.remotes": [
+    {
+      "domain": "git.corp.stripe.com",
+      "type": "GitHub"
+    }
+  ],
+  "ruby.rubocop.hideDisableSuggestions": true,
+  "typescript.tsdk": "~/stripe/pay-server/frontend/js-scripts/node_modules/typescript/lib",
+  "terminal.integrated.fontSize": 16,
+  "stripe.cliInstallPath": "/usr/local/bin/stripe",
+  "remote.forwardOnOpen": false,
+  "remote.otherPortsAttributes": {
+    "onAutoForward": "ignore"
+  },
+  "workbench.colorTheme": "GitHub Dark",
+  "gitlens.ai.experimental.generateCommitMessage.enabled": false,
+  "python.defaultInterpreterPath": "/Users/liamoneill/.pyenv/versions/3.11.6/bin/python",
+  "files.autoSave": "onFocusChange",
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.wordWrap": "on",
+  "editor.formatOnSave": true,
+  "remote.SSH.enableDynamicForwarding": false,
+  "workbench.iconTheme": "Monokai Pro Icons",
+  "azureLogicAppsStandard.autoRuntimeDependenciesPath": "C:\\Users\\liamf\\.azurelogicapps\\dependencies",
+  "azureLogicAppsStandard.nodeJsBinaryPath": "node",
+  "settingsSync.ignoredExtensions": [
+    "azurepolicy.azurepolicyextension"
+  ],
+  "azureLogicAppsStandard.funcCoreToolsBinaryPath": "func",
+  "azureLogicAppsStandard.dotnetBinaryPath": "dotnet",
+  "remote.autoForwardPortsSource": "output",
+  "cody.override.serverEndpoint": "http://sourcegraph.corp.stripe.com",
+  "cody.override.authToken": "sgp_unused_but_must_be_nonempty",
+  "cody.net.proxy.endpoint": "unix://~/.stripeproxy",
+  "window.customTitleBarVisibility": "windowed",
+  "security.promptForRemoteFileProtocolHandling": false,
+  "chat.instructionsFilesLocations": {
+    ".github/instructions": true,
+    "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-collections-post-response.instructions.md": true,
+    "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-collections-pre-request.instructions.md": true,
+    "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-folder-post-response.instructions.md": true,
+    "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-folder-pre-request.instructions.md": true,
+    "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-http-request-post-response.instructions.md": true,
+    "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-http-request-pre-request.instructions.md": true,
+    "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-collections-post-response.instructions.md": true,
+    "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-collections-pre-request.instructions.md": true,
+    "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-folder-post-response.instructions.md": true,
+    "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-folder-pre-request.instructions.md": true,
+    "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-http-request-post-response.instructions.md": true,
+    "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-http-request-pre-request.instructions.md": true
+  },
+  "gitlens.ai.enabled": false,
+  "typescript.native-preview.tsdk": "frontend/js-scripts/scripts",
+  "postman.mcp.notifications.postmanMCP": false,
+  "chat.mcp.gallery.enabled": true,
+  "claudeCode.claudeProcessWrapper": "/usr/local/bin/claude",
+  "claudeCode.environmentVariables": [
+    {
+      "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
+      "value": "true"
+    }
+  ],
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "workbench.quickOpen.closeOnFocusLost": false,
+  "application.shellEnvironmentResolutionTimeout": 100,
+  "git.openRepositoryInParentFolders": "always",
+  "claudeCode.preferredLocation": "panel",
+  "claude-code.claudeProcessWrapper": "/usr/local/bin/claude",
+  "claude-code.environmentVariables": [
+    {
+      "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
+      "value": "true"
+    }
+  ],
+  "cursor.composer.shouldChimeAfterChatFinishes": true,
+  "cursor.cpp.enablePartialAccepts": true,
+  "github-enterprise.uri": "https://git.corp.stripe.com/",
+  "http.proxy": "http://127.0.0.1:7891/",
+  "stripe.projectName": "stripe.projectName",
+  "update.mode": "none"
 }
