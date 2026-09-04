@@ -145,10 +145,6 @@
     {
       "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
       "value": "true"
-    },
-    {
-      "name": "STRIPE_CLAUDE_PERMISSION_MODE",
-      "value": "bypassPermissions"
     }
   ],
   "github.copilot.nextEditSuggestions.enabled": true,
@@ -161,10 +157,6 @@
     {
       "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
       "value": "true"
-    },
-    {
-      "name": "STRIPE_CLAUDE_PERMISSION_MODE",
-      "value": "bypassPermissions"
     }
   ],
   "security.promptForLocalFileProtocolHandling": false,
