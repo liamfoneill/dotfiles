@@ -295,11 +295,14 @@ else
     (
         set -e
         backup_file "${HOME}/.zshrc"
+        backup_file "${HOME}/.zshenv"
 
         if ! dry_run "stow zsh"; then
             remove_for_stow "${HOME}/.zshrc"
+            # rustup and tempoup write a real ~/.zshenv, which blocks stow
+            remove_for_stow "${HOME}/.zshenv"
             stow_module "zsh"
-            success "Linked .zshrc"
+            success "Linked .zshrc and .zshenv"
         fi
 
         if [[ "$PROFILE" == "work" ]]; then
