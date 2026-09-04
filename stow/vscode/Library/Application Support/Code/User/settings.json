@@ -53,7 +53,9 @@
   ],
   "workbench.startupEditor": "none",
   "settingsSync.ignoredSettings": [
-    "terminal.integrated.profiles.windows"
+    "terminal.integrated.profiles.windows",
+    "claudeCode.environmentVariables",
+    "claude-code.environmentVariables"
   ],
   "explorer.confirmDelete": false,
   "explorer.confirmDragAndDrop": false,
