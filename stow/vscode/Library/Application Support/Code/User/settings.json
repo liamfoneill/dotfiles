@@ -37,7 +37,7 @@
     "typescriptreact": true
   },
   "editor.fontSize": 16,
-  "git.autofetch": true,
+  "git.autofetch": false,
   "mssql.connections": [
     {
       "server": "{{put-server-name-here}}",
@@ -87,7 +87,7 @@
     }
   ],
   "ruby.rubocop.hideDisableSuggestions": true,
-  "typescript.tsdk": "~/stripe/pay-server/frontend/js-scripts/node_modules/typescript/lib",
+  "typescript.tsdk": "~/stripe/mint/pay-server/frontend/js-scripts/node_modules/typescript/lib",
   "terminal.integrated.fontSize": 16,
   "stripe.cliInstallPath": "/usr/local/bin/stripe",
   "remote.forwardOnOpen": false,
@@ -119,6 +119,8 @@
   "chat.instructionsFilesLocations": {
     ".github/instructions": true,
     ".claude/rules": true,
+    "~/.copilot/instructions": true,
+    "~/.claude/rules": true,
     "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-collections-post-response.instructions.md": true,
     "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-collections-pre-request.instructions.md": true,
     "/var/folders/83/pypxl40d0kl9wq54cyps1fxc0000gn/T/postman-folder-post-response.instructions.md": true,
@@ -133,7 +135,7 @@
     "/var/folders/2x/l57m9mn57kxfxnblh5qj8b_80000gn/T/postman-http-request-pre-request.instructions.md": true
   },
   "gitlens.ai.enabled": false,
-  "typescript.native-preview.tsdk": "frontend/js-scripts/scripts",
+  "typescript.native-preview.tsdk": "~/stripe/mint/pay-server/frontend/js-scripts/scripts",
   "postman.mcp.notifications.postmanMCP": false,
   "chat.mcp.gallery.enabled": true,
   "claudeCode.claudeProcessWrapper": "/usr/local/bin/claude",
@@ -141,6 +143,10 @@
     {
       "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
       "value": "true"
+    },
+    {
+      "name": "STRIPE_CLAUDE_PERMISSION_MODE",
+      "value": "bypassPermissions"
     }
   ],
   "github.copilot.nextEditSuggestions.enabled": true,
@@ -153,6 +159,10 @@
     {
       "name": "CLAUDE_CODE_SKIP_AUTH_LOGIN",
       "value": "true"
+    },
+    {
+      "name": "STRIPE_CLAUDE_PERMISSION_MODE",
+      "value": "bypassPermissions"
     }
   ],
   "security.promptForLocalFileProtocolHandling": false,
@@ -164,5 +174,23 @@
   "chat.checkpoints.enabled": false,
   "chat.disableAIFeatures": true,
   "chatgpt.openOnStartup": true,
-  "workbench.sideBar.location": "right"
+  "run-pay.test.executionUI": "all",
+  "run-pay.autogenLsp.enabled": true,
+  "typescript.experimental.useTsgo": false,
+  "metals.forceCoursierJar": true,
+  "metals.serverProperties": [
+    "-Xmx12g",
+    "-Xms2g",
+    "-XX:+UseZGC",
+    "-XX:ZUncommitDelay=30",
+    "-XX:ZCollectionInterval=5",
+    "-XX:+IgnoreUnrecognizedVMOptions",
+    "-Dmetals.java-turbine-recompile-delay=5 minutes",
+    "-Dhttp.proxyHost=127.0.0.1",
+    "-Dhttp.proxyPort=7891",
+    "-Dhttps.proxyHost=127.0.0.1",
+    "-Dhttps.proxyPort=7891"
+  ],
+  "chatgpt.cliExecutable": "/usr/local/bin/codex",
+  "claudeCode.allowDangerouslySkipPermissions": true
 }

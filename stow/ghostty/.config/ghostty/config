@@ -40,6 +40,9 @@ quick-terminal-screen = mouse
 quick-terminal-autohide = true
 quick-terminal-animation-duration = 0.15
 
+# --- Notifications ---
+desktop-notifications = true
+
 # --- Security ---
 clipboard-paste-protection = true
 clipboard-paste-bracketed-safe = true

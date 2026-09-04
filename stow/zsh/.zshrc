@@ -360,3 +360,6 @@ function yz() {
     cd "${target}" || return 1
     y
 }
+
+
+export PATH="$PATH:/Applications/Obsidian.app/Contents/MacOS"
